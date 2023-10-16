@@ -5,7 +5,7 @@ import os
 
 from typing import Union, Optional, List
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response, status
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -15,22 +15,23 @@ from pydantic import BaseModel, validator, Field
 from app.models import Answer as Db_answer, Questions as Db_quesion
 from app.models import pg_db
 
-print(os.getcwd())
 
 app = FastAPI()
 
 app.mount('/static', StaticFiles(directory='app/static'), name='static')
 templates = Jinja2Templates(directory='app/templates')
 
-
+#Создание таблиц базы данных если они не существуют
 with pg_db:
     pg_db.create_tables([Db_answer])
 
 
+#Валидатор для кол-ва вопросов
 class Questions(BaseModel):
     questions_num: Optional[int] = None
 
 
+#Валидатор для ответов
 class Answer(BaseModel):
     question_id: int
     created_at: str
@@ -76,16 +77,18 @@ async def get_questions(questions: Questions | None = None):
 
 
 #Записать ответ
-@app.post("/set_answer")
-async def write_answers(answers: List[Answer]):
+@app.post("/set_answer", status_code=201)
+async def write_answers(answers: List[Answer], response: Response):
     for answer in answers:
-        new_answer = Db_answer.create(
-            question_id = answer.question_id,
-            created_at = answer.created_at,
-            category = answer.category,
-            question_text = answer.question_text,
-            answer = answer.answer
-        )
-        print(new_answer)
+        try:
+            new_answer = Db_answer.create(
+                question_id = answer.question_id,
+                created_at = answer.created_at,
+                category = answer.category,
+                question_text = answer.question_text,
+                answer = answer.answer
+            )
+        except Exception as err:
+            response.status_code = status.HTTP_409_CONFLICT
 
-    return {"answers": answers}
+    return 
