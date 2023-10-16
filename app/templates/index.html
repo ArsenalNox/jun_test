@@ -41,11 +41,9 @@
                 document.getElementById('qst1').classList.remove('hidden')
                 document.getElementById('btn-wrp1').classList.remove('hidden')
                 document.getElementById('int1').classList.add('hidden')
-                console.log(json['questions'][0]['question'])
 
                 let i = 1
                 for (let question of json['questions']) {
-                    console.log(question)
 
                     let question_elem = document.createElement('div')
                     question_elem.innerHTML = `<h3>Вопрос ${i}</h3><p>${question["question"]}<p>`
@@ -78,7 +76,6 @@
         let data = []
         let questions = document.getElementsByClassName('question')
         for (let question of questions) {
-            console.log(question)
             data.push({
                 question_id: question.id,
                 created_at: question.getAttribute('created_at'),
@@ -87,7 +84,6 @@
                 answer: document.getElementById(`${question.id}-a`).value
             })
         }
-        console.log(data)
         document.getElementById('qst1').innerHTML = ""
 
 
