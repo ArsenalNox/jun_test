@@ -20,4 +20,4 @@ curl --location 'http://127.0.0.1:8000/get/' \
 }'
 ```
 
-Примеры доступны в ввиде Postman коллекции
+Примеры доступны в ввиде Postman коллекции ```Jun-test.postman_collection.json```
