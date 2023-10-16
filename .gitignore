@@ -144,4 +144,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-postgre-data
+postgres-data
