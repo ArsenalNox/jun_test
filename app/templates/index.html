@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>Questions</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <h1>test</h1>
+    <div class='initial' id="int1">
+        <label>
+            Количество вопросов:
+            <input type="int" name="num_questions" id="nq1" value="1" min="1">
+        </label><br>
+        <button onclick="get_questions()">Получить вопросы</button>
+    </div>
+
+    <div class='question-wrapper hidden' id="qst1"></div>
+    <div class='button-wrapper hidden' id="btn-wrp1">
+        <button onclick="send_answers()">Отправить ответы</button>
+    </div>
+</body>
+
+<script>
+    function get_questions() {
+        //Получить список вопросов и вывести их пользователю
+        num_questions = document.getElementById('nq1').value
+        console.log(`Getting... ${num_questions}`)
+
+        fetch("http://127.0.0.1:8000/get/", {
+                method: "POST",
+                body: JSON.stringify({
+                    questions_num: num_questions,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                document.getElementById('qst1').classList.remove('hidden')
+                document.getElementById('btn-wrp1').classList.remove('hidden')
+                document.getElementById('int1').classList.add('hidden')
+                console.log(json['questions'][0]['question'])
+
+                let i = 1
+                for (let question of json['questions']) {
+                    console.log(question)
+
+                    let question_elem = document.createElement('div')
+                    question_elem.innerHTML = `<h3>Вопрос ${i}</h3><p>${question["question"]}<p>`
+                    question_elem.className = 'question'
+                    question_elem.id = question['id']
+                    question_elem.setAttribute('created_at', question['created_at'])
+                    question_elem.setAttribute('category', question['category']['title'])
+                    question_elem.setAttribute('text', question['question'])
+
+                    let input_field = document.createElement('input')
+                    input_field.type = 'text'
+                    input_field.className = 'asnwer_field'
+                    input_field.id = `${question['id']}-a`
+
+                    question_elem.append(input_field)
+                    document.getElementById('qst1').append(question_elem)
+                    i++
+                }
+
+            });
+
+    }
+
+    function send_answers() {
+        //Получить ответы пользователя и отправить данные на сервер
+        document.getElementById('qst1').classList.add('hidden')
+        document.getElementById('btn-wrp1').classList.add('hidden')
+        document.getElementById('int1').classList.remove('hidden')
+
+        let data = []
+        let questions = document.getElementsByClassName('question')
+        for (let question of questions) {
+            console.log(question)
+            data.push({
+                question_id: question.id,
+                created_at: question.getAttribute('created_at'),
+                category: question.getAttribute('category'),
+                question_text: question.getAttribute('text'),
+                answer: document.getElementById(`${question.id}-a`).value
+            })
+        }
+        console.log(data)
+        document.getElementById('qst1').innerHTML = ""
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(data),
+            redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:8000/set_answer/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    }
+</script>
+
+</html>
