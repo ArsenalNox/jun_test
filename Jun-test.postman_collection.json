@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "52744f03-7cd0-47de-a103-aaebff38971f",
+		"name": "Jun-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14187065",
+		"_collection_link": "https://dark-resonance-343322.postman.co/workspace/dbe6a7d0-8acd-407c-86a6-d0ce7d394bbd/collection/14187065-52744f03-7cd0-47de-a103-aaebff38971f?action=share&source=collection_link&creator=14187065"
+	},
+	"item": [
+		{
+			"name": "Get questions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"questions_num\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/get",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"get"
+					]
+				},
+				"description": "Получение N вопросов"
+			},
+			"response": [
+				{
+					"name": "С кол-ом",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questions_num\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"get"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Mon, 16 Oct 2023 18:55:49 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "848"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"questions\": [\n        {\n            \"id\": 34873,\n            \"answer\": \"the mice will play\",\n            \"question\": \"According to the proverb, it's what happens when the cat's away\",\n            \"value\": 100,\n            \"airdate\": \"1994-02-18T20:00:00.000Z\",\n            \"created_at\": \"2022-12-30T18:52:01.622Z\",\n            \"updated_at\": \"2022-12-30T18:52:01.622Z\",\n            \"category_id\": 2935,\n            \"game_id\": 6761,\n            \"invalid_count\": null,\n            \"category\": {\n                \"id\": 2935,\n                \"title\": \"unrelated stuff\",\n                \"created_at\": \"2022-12-30T18:52:01.576Z\",\n                \"updated_at\": \"2022-12-30T18:52:01.576Z\",\n                \"clues_count\": 5\n            }\n        },\n        {\n            \"id\": 14116,\n            \"answer\": \"Texas\",\n            \"question\": \"Longhorns\",\n            \"value\": 100,\n            \"airdate\": \"1989-05-09T19:00:00.000Z\",\n            \"created_at\": \"2022-12-30T18:43:21.104Z\",\n            \"updated_at\": \"2022-12-30T18:43:21.104Z\",\n            \"category_id\": 1638,\n            \"game_id\": 4632,\n            \"invalid_count\": null,\n            \"category\": {\n                \"id\": 1638,\n                \"title\": \"college nicknames\",\n                \"created_at\": \"2022-12-30T18:43:21.071Z\",\n                \"updated_at\": \"2022-12-30T18:43:21.071Z\",\n                \"clues_count\": 5\n            }\n        }\n    ]\n}"
+				},
+				{
+					"name": "Без",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"get"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Mon, 16 Oct 2023 18:56:17 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "479"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"questions\": [\n        {\n            \"id\": 191657,\n            \"answer\": \"a mass market paperback\",\n            \"question\": \"Abbreviated MMP, it's an inexpensive softcover book sold in multiple outlets\",\n            \"value\": 400,\n            \"airdate\": \"2017-11-17T20:00:00.000Z\",\n            \"created_at\": \"2022-12-30T21:33:50.282Z\",\n            \"updated_at\": \"2022-12-30T21:33:50.282Z\",\n            \"category_id\": 2051,\n            \"game_id\": 5835,\n            \"invalid_count\": null,\n            \"category\": {\n                \"id\": 2051,\n                \"title\": \"publishing\",\n                \"created_at\": \"2022-12-30T18:45:59.995Z\",\n                \"updated_at\": \"2022-12-30T18:45:59.995Z\",\n                \"clues_count\": 15\n            }\n        }\n    ]\n}"
+				},
+				{
+					"name": "Валидация",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questions_num\": \"Очень много\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/get",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"get"
+							]
+						}
+					},
+					"status": "Unprocessable Entity",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Mon, 16 Oct 2023 18:58:04 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "230"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail\": [\n        {\n            \"type\": \"int_parsing\",\n            \"loc\": [\n                \"body\",\n                \"questions_num\"\n            ],\n            \"msg\": \"Input should be a valid integer, unable to parse string as an integer\",\n            \"input\": \"Очень много\",\n            \"url\": \"https://errors.pydantic.dev/2.4/v/int_parsing\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Set answers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"question_id\": \"181231\",\r\n        \"created_at\": \"2022-12-30T21:23:09.983Z\",\r\n        \"category\": \"scrambled kegs\",\r\n        \"question_text\": \"Out with the old:CLEAN STEW\",\r\n        \"answer\": \"Dirty stew\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/set_answer",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"set_answer"
+					]
+				},
+				"description": "Сохранение ответов"
+			},
+			"response": [
+				{
+					"name": "Уже сохранённый ответ",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"question_id\": \"182771\",\r\n        \"created_at\": \"2022-12-30T21:23:09.983Z\",\r\n        \"category\": \"scrambled kegs\",\r\n        \"question_text\": \"Out with the old:CLEAN STEW\",\r\n        \"answer\": \"Dirty stew\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/set_answer",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"set_answer"
+							]
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Mon, 16 Oct 2023 18:56:32 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "4"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "null"
+				},
+				{
+					"name": "Успешное сохранение",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"question_id\": \"181231\",\r\n        \"created_at\": \"2022-12-30T21:23:09.983Z\",\r\n        \"category\": \"scrambled kegs\",\r\n        \"question_text\": \"Out with the old:CLEAN STEW\",\r\n        \"answer\": \"Dirty stew\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/set_answer",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"set_answer"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "date",
+							"value": "Mon, 16 Oct 2023 18:57:11 GMT"
+						},
+						{
+							"key": "server",
+							"value": "uvicorn"
+						},
+						{
+							"key": "content-length",
+							"value": "4"
+						},
+						{
+							"key": "content-type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "null"
+				}
+			]
+		}
+	]
+}
