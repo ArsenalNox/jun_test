@@ -7,8 +7,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=my_app
+      - PGPORT=5433
     ports:
-      - '5432:5432'
+      - '5433:5433'
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     networks:
