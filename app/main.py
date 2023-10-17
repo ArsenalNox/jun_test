@@ -12,18 +12,30 @@ from fastapi.templating import Jinja2Templates
 
 from pydantic import BaseModel, validator, Field
 
-from app.models import Answer as Db_answer, Questions as Db_quesion
-from app.models import pg_db
+from dotenv import load_dotenv
 
+load_dotenv()
+
+if os.getenv('environment') == 'dev':
+    from models import Answer as Db_answer, Questions as Db_quesion
+    from models import pg_db
+else:
+    from app.models import Answer as Db_answer, Questions as Db_quesion
+    from app.models import pg_db
 
 app = FastAPI()
 
-app.mount('/static', StaticFiles(directory='app/static'), name='static')
-templates = Jinja2Templates(directory='app/templates')
+
+if os.getenv('environment') == 'dev':
+    app.mount('/static', StaticFiles(directory='static'), name='static')
+    templates = Jinja2Templates(directory='templates')
+else:
+    app.mount('/static', StaticFiles(directory='app/static'), name='static')
+    templates = Jinja2Templates(directory='app/templates')
 
 #Создание таблиц базы данных если они не существуют
 with pg_db:
-    pg_db.create_tables([Db_answer])
+    pg_db.create_tables([Db_answer, Db_quesion])
 
 
 #Валидатор для кол-ва вопросов
@@ -44,13 +56,26 @@ class Answer(BaseModel):
 async def return_index(request: Request):
     return templates.TemplateResponse('index.html', context={'request': request})
 
-
-#Получить ворпос/вопросы
-@app.post("/get")
-async def get_questions(questions: Questions | None = None):
+#Записать в бд вопросы 
+@app.post("/load_questions", status_code=201)
+async def load_questions(questions: Questions | None = None):
     num = 1 
     if questions != None:
         num = questions.questions_num
+
+    #Выбрать последние N записанных вопросов
+    select_questions = Db_quesion.select().where(
+        Db_quesion.is_used == False
+        ).order_by(Db_quesion.id.desc()).limit(num).execute()
+
+    return_questions = []
+    for q in select_questions:
+        return_questions.append({
+            "id": q.question_id,
+            "created_at": q.created_at,
+            "category": q.category,
+            "question": q.question_text
+        })
 
     tmp_questions = []
     while True:
@@ -59,21 +84,30 @@ async def get_questions(questions: Questions | None = None):
         Если айди вопроса уже есть в бд то получить новый вопрос
         """
         request = requests.get(f"https://jservice.io/api/random?count={1}")
-        quesion = request.json()[0]
+        question = request.json()[0]
 
         check = Db_answer.select().where(
-            Db_answer.question_id == quesion['id']
+            Db_answer.question_id == question['id']
         ).count()
 
         if check < 1:
-            tmp_questions.append(quesion)
-        
+            tmp_questions.append(question)
+
         if len(tmp_questions) < num:
             continue
         else:
             break
-    
-    return {"questions": tmp_questions}
+
+    for question in tmp_questions:
+
+        new_question = Db_quesion.create(
+            question_id = question['id'],
+            created_at = question['created_at'],
+            category = question['category']['title'],
+            question_text = question['question'],
+        )
+
+    return {"questions": return_questions}
 
 
 #Записать ответ

@@ -1,6 +1,13 @@
-from peewee import * 
+import os
 
-pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='project_db', port=5432)
+from peewee import * 
+from dotenv import load_dotenv
+
+load_dotenv()
+if os.getenv('environment') == 'dev':
+    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='localhost', port=5432)
+else:
+    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='project_db', port=5432)
 
 class BaseModel(Model):
     class Meta:
@@ -22,8 +29,7 @@ class Questions(BaseModel):
     created_at = DateTimeField()
     category = CharField()
     question_text = CharField()
-    answer = CharField()
-    used = BooleanField(default=False)
+    is_used = BooleanField(default=False)
 
     class Meta:
         db_table = 'questions'
