@@ -126,3 +126,20 @@ async def write_answers(answers: List[Answer], response: Response):
             response.status_code = status.HTTP_409_CONFLICT
 
     return 
+
+
+@app.get("/answers")
+async def get_answers():
+    answ_select = Db_answer.select()
+    
+    return_answ = []
+    for answ in answ_select:
+        return_answ.append({
+            "id": answ.question_id,
+            "question": answ.question_text,
+            "answer": answ.answer,
+            "category": answ.category,
+            "created_at": answ.created_at
+        })
+
+    return return_answ
