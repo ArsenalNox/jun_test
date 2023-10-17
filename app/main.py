@@ -122,6 +122,8 @@ async def write_answers(answers: List[Answer], response: Response):
                 question_text = answer.question_text,
                 answer = answer.answer
             )
+            query = Db_quesion.update(is_used = True).where(Db_quesion.question_id == answer.question_id)
+            query.execute()
         except Exception as err:
             response.status_code = status.HTTP_409_CONFLICT
 
