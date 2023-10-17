@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 if os.getenv('environment') == 'dev':
-    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='localhost', port=5432)
+    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='localhost', port=5433)
 else:
-    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='project_db', port=5432)
+    pg_db = PostgresqlDatabase('my_app', user='postgres', password='admin', host='project_db', port=5433)
 
 class BaseModel(Model):
     class Meta:
