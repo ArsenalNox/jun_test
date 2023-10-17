@@ -38,6 +38,10 @@
             })
             .then((response) => response.json())
             .then((json) => {
+                if (json['questions'].length < 1){
+                    return
+                }
+
                 document.getElementById('qst1').classList.remove('hidden')
                 document.getElementById('btn-wrp1').classList.remove('hidden')
                 document.getElementById('int1').classList.add('hidden')
