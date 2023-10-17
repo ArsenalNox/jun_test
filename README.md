@@ -2,7 +2,9 @@
 
 ## Порядок запуска 
 
+- Клонировать этот репозиторий ```https://github.com/ArsenalNox/jun_test``` или скачать архивом
 - Убедиться что установленны ```docker``` и ```docker-compose```
+- Перейти в директорию с файлами ```docker``` и ```docker-compose.yml```
 - Выполнить ```docker-compose build```
 - Выполнить ```docker-compose up```
 
