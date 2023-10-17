@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <h1>test</h1>
+    <h1>Вопросы</h1>
     <div class='initial' id="int1">
         <label>
             Количество вопросов:
@@ -39,7 +39,7 @@
             .then((response) => response.json())
             .then((json) => {
                 if (json['questions'].length < 1){
-                    return
+                    location.reload();
                 }
 
                 document.getElementById('qst1').classList.remove('hidden')
